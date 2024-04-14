@@ -6,7 +6,7 @@ void main() {
   ));
 }
 
-//class product
+//********************  class product ***********************
 class Product {
   final String name;
   final double price;
@@ -15,7 +15,7 @@ class Product {
   Product(this.name, this.price, this.imageUrl);
 }
 
-//abstract handler class
+//********************  abstract handler class ***************
 abstract class Handler {
   Handler? _nextHandler;
 
@@ -34,40 +34,40 @@ abstract class Handler {
   }
 }
 
-// DiscountHandler
+//************************   DiscountHandler   ********************
 class DiscountHandler extends Handler {
   @override
   void processRequest(Product product, BuildContext context) {
     if (product.price >= 100) {
-      _showDialog(context, '满100减20优惠已应用');
+      _showDialog(context, 'минус 20 долларов при покупке от 100 долларов');
     } else {
-      // 若条件不满足，则交由下一个处理器处理
+      // If the conditions are not met, it will be processed by the next processor
       _nextHandler?.handleRequest(product, context);
     }
   }
 }
 
-// 打折处理器
+// ***********************   PromotionHandler *********************
 class PromotionHandler extends Handler {
   @override
   void processRequest(Product product, BuildContext context) {
     if (product.price > 200) {
-      _showDialog(context, '满200打9折优惠已应用');
+      _showDialog(context, 'скидка 10% при покупке от 200 долларов');
     } else {
-      // 若条件不满足，则交由下一个处理器处理
+     // If the conditions are not met, it will be processed by the next processor
       _nextHandler?.handleRequest(product, context);
     }
   }
 }
 
-// 赠品处理器
+// ******************* GiftHandler ******************************
 class GiftHandler extends Handler {
   @override
   void processRequest(Product product, BuildContext context) {
     if (product.price > 300) {
-      _showDialog(context, '购物满300送精美礼品');
+      _showDialog(context, 'Бесплатные подарки при покупке более 300 долларов');
     } else {
-      // 若条件不满足，则交由下一个处理器处理
+       // If the conditions are not met, it will be processed by the next processor
       _nextHandler?.handleRequest(product, context);
     }
   }
@@ -102,12 +102,12 @@ class OnlineStore extends StatelessWidget {
     ),
     Product(
       'Smart Watch',
-      199,
+      280,
       'https://sincoole.com/Uploads/20190219/18496013975c6b83aee7443.jpg',
     ),
     Product(
       'Headphones',
-      79,
+      110,
       'https://www.2008php.com/2020_Website_appreciate/2020-03-24/20200324225738LHPXaN2fJyzw.jpg',
     ),
   ];
@@ -129,10 +129,10 @@ class OnlineStore extends StatelessWidget {
         itemBuilder: (context, index) {
           final product = _products[index];
           if (product.imageUrl.isEmpty) {
-            return const SizedBox.shrink(); // 没有有效图片链接则返回空白部件
+            return const SizedBox.shrink(); 
           }
 
-          // 初始化责任链
+          // Инициализировать цепочку обязанностей
           _discountHandler.nextHandler = _promotionHandler;
           _promotionHandler.nextHandler = _giftHandler;
 
@@ -147,10 +147,10 @@ class OnlineStore extends StatelessWidget {
             subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
             trailing: ElevatedButton(
               onPressed: () {
-                // 购买商品，触发责任链处理
+                // Приобретенные товары, запустившие цепочку обязанностей
                 _discountHandler.handleRequest(product, context);
               },
-              child: const Text('购买'),
+              child: const Text('BUY'),
             ),
           );
         },
