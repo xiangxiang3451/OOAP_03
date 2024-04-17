@@ -27,10 +27,6 @@ abstract class Handler {
 
   void handleRequest(Product product, BuildContext context) {
     processRequest(product, context);
-
-    if (_nextHandler != null) {
-      _nextHandler!.handleRequest(product, context);
-    }
   }
 }
 
@@ -131,10 +127,10 @@ class OnlineStore extends StatelessWidget {
           if (product.imageUrl.isEmpty) {
             return const SizedBox.shrink(); 
           }
+          _giftHandler.nextHandler=_promotionHandler;
+          _promotionHandler.nextHandler=_discountHandler;
 
-          // Инициализировать цепочку обязанностей
-          _discountHandler.nextHandler = _promotionHandler;
-          _promotionHandler.nextHandler = _giftHandler;
+
 
           return ListTile(
             leading: Image.network(
@@ -148,7 +144,7 @@ class OnlineStore extends StatelessWidget {
             trailing: ElevatedButton(
               onPressed: () {
                 // Приобретенные товары, запустившие цепочку обязанностей
-                _discountHandler.handleRequest(product, context);
+                _giftHandler.handleRequest(product, context);
               },
               child: const Text('BUY'),
             ),

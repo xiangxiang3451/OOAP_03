@@ -80,15 +80,9 @@ class OnlineStore extends StatelessWidget {
                 if (product.price >= 300) {
                   showDiscountDialog(
                       context, 'Бесплатные подарки при покупке более 300 долларов');
-                  showDiscountDialog(
-                      context, 'скидка 10% при покупке от 200 долларов');
-                  showDiscountDialog(
-                      context, 'минус 20 долларов при покупке от 100 долларов');
                 } else if (product.price >= 200) {
                   showDiscountDialog(
                       context, 'скидка 10% при покупке от 200 долларов');
-                  showDiscountDialog(
-                      context, 'минус 20 долларов при покупке от 100 долларов');
                 } else if (product.price >= 100) {
                   showDiscountDialog(
                       context, 'минус 20 долларов при покупке от 100 долларов');
